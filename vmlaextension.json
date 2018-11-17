@@ -1,0 +1,19 @@
+                     {
+                        "name": "[concat(parameters('vmName'),'/omsPolicy')]",
+                        "type": "Microsoft.Compute/virtualMachines/extensions",
+                        "location": "[parameters('location')]",
+                        "apiVersion": "2017-12-01",
+                        "properties": {
+                           "publisher": "Microsoft.EnterpriseCloud.Monitoring",
+                           "type": "MicrosoftMonitoringAgent",
+                           "typeHandlerVersion": "1.0",
+                           "autoUpgradeMinorVersion": true,
+                           "settings": {
+                              "workspaceId": "[reference(parameters('logAnalytics'), '2015-03-20').customerId]"
+                           },
+                           "protectedSettings": {
+                              "workspaceKey": "[listKeys(parameters('logAnalytics'), '2015-03-20').primarySharedKey]"
+                           }
+                        }
+                     }
+                  
