@@ -61,6 +61,10 @@
                     "marketplaceName": "ServiceMap"
                 },
                 {
+                    "name": "[concat('InfrastructureInsights', '(', parameters('WorkspaceName'), ')')]",
+                    "marketplaceName": "InfrastructureInsights"
+                },
+                {
                     "name": "[concat('AzureAppGatewayAnalytics', '(', parameters('WorkspaceName'), ')')]",
                     "marketplaceName": "AzureAppGatewayAnalytics"
                 },

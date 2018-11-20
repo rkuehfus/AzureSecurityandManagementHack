@@ -25,3 +25,5 @@ Set-AzureKeyVaultSecret -VaultName $MonitoringHackVaultName -Name "VMPassword" -
 #Note: This will deploy VMs using B series VMs.  By default a subscription is limited to 10 cores of B Series per region.  You may have to request more cores or
 # choice another region if you run into quota errors on your deployment.  Also feel free to modify the ARM template to use a different VM Series.
 New-AzureRmResourceGroupDeployment -Name $MonitoringHackName -ResourceGroupName $MonitoringHackName -TemplateFile '.\VMSSazuredeploy.json' -TemplateParameterFile '.\azuredeploy.parameters.json'
+
+
