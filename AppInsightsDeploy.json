@@ -93,9 +93,12 @@
                 }
             },
             {
-                "name": "eShopPingTest",
+                "name": "[variables('pingname')]",
                 "apiVersion": "2015-05-01",
                 "type": "microsoft.insights/webtests",
+                "tags": {
+                    "[concat('hidden-link:', resourceId('microsoft.insights/components/', parameters('appName')))]": "Resource"
+                },
                 "location": "[resourceGroup().location]",
                 "dependsOn": [
                     "[concat('microsoft.insights/components/', parameters('appName'))]"
@@ -119,9 +122,13 @@
                 "type": "Microsoft.Insights/alertRules",
                 "apiVersion": "2015-04-01",
                 "location": "[resourceGroup().location]",
+                "tags": {
+                    "[concat('hidden-link:', resourceId('microsoft.insights/components/', parameters('appName')))]": "Resource",
+                    "[concat('hidden-link:', resourceId('microsoft.insights/webtests/', variables('pingname')))]": "Resource"
+                },
                 "dependsOn": [
                     "[concat('microsoft.insights/components/', parameters('appName'))]",
-                    "[concat('microsoft.insights/webtests/', 'eShopPingTest')]"
+                    "[concat('microsoft.insights/webtests/', variables('pingname'))]"
                 ],
                 "properties": {
                     "name": "eShopPingTest",
@@ -133,7 +140,7 @@
                         "dataSource": {
                             "$type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client",
                             "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
-                            "resourceUri": "[resourceId('microsoft.insights/webtests/', 'eShopPingTest')]",
+                            "resourceUri": "[resourceId('microsoft.insights/webtests/', variables('pingname'))]",
                             "metricName": "GSMT_AvRaW"
                         },
                         "windowSize": "PT15M",
