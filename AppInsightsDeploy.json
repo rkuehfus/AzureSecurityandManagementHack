@@ -60,7 +60,7 @@
             "billingplan": "[concat(parameters('appName'),'/', variables('pricePlan')[0])]",
             "pingname": "eShopPingTest",
             "pingguid": "[guid(subscription().id)]",
-            "pingexpected": "200"
+            "pingexpected": 200
         },
         "resources": [
             {
@@ -104,8 +104,8 @@
                     "Name": "eShopPingTest",
                     "Description": "eShopPingTest",
                     "Enabled": true,
-                    "Frequency": "300",
-                    "Timeout": "30",
+                    "Frequency": 300,
+                    "Timeout": 30,
                     "Kind": "ping",
                     "Locations": "[parameters('testlocations')]",
                     "Configuration": {
