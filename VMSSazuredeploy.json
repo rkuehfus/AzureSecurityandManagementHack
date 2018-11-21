@@ -291,7 +291,9 @@
             "type": "Microsoft.Resources/deployments",
             "apiVersion": "2018-05-01",
             "name": "AppInsightsDeployment",
-            "dependsOn": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('webSrvPublicIP'))]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -304,6 +306,9 @@
                     },
                     "appName": {
                         "value": "[concat(parameters('envPrefixName'), 'hackAppInsights')]"
+                    },
+                    "webSrvPublicIP": {
+                        "value": "[variables('webSrvPublicIP')]"
                     }
                 }
             }
@@ -1103,6 +1108,7 @@
                 "[concat('Microsoft.Compute/virtualMachines/', variables('VisualStudioSrvName'))]",
                 "[concat(parameters('envPrefixName'), 'VSSrv17CustomScriptExtension')]",
                 "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]",
+                "[resourceId('Microsoft.Resources/deployments','AppInsightsDeployment')]",
                 "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
             ],
             "sku": {
