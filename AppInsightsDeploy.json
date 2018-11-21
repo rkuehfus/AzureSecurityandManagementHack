@@ -131,8 +131,8 @@
                     "[concat('microsoft.insights/webtests/', variables('pingname'))]"
                 ],
                 "properties": {
-                    "name": "eShopPingTest",
-                    "description": "eShopPingTest",
+                    "name": "[variables('pingname')]",
+                    "description": "[variables('pingname')]",
                     "isEnabled": true,
                     "condition": {
                         "$type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.LocationThresholdRuleCondition, Microsoft.WindowsAzure.Management.Mon.Client",
