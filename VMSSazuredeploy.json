@@ -308,7 +308,7 @@
                         "value": "[concat(parameters('envPrefixName'), 'hackAppInsights')]"
                     },
                     "webSrvPublicIP": {
-                        "value": "[variables('webSrvPublicIP')]"
+                        "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('webSrvPublicIP')), '2015-06-15').dnsSettings.fqdn]"
                     }
                 }
             }
