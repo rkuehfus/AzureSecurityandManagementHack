@@ -90,7 +90,7 @@
                 }
             },
             {
-                "name": "eShopeWebTest",
+                "name": "eShopPingTest",
                 "apiVersion": "2015-05-01",
                 "type": "microsoft.insights/webtests",
                 "location": "[resourceGroup().location]",
@@ -101,8 +101,8 @@
                     "Name": "eShopPingTest",
                     "Description": "eShopPingTest",
                     "Enabled": true,
-                    "Frequency": 300,
-                    "Timeout": 30,
+                    "Frequency": "300",
+                    "Timeout": "30",
                     "Kind": "ping",
                     "Locations": "[parameters('testlocations')]",
                     "Configuration": {
@@ -118,7 +118,7 @@
                 "location": "[resourceGroup().location]",
                 "dependsOn": [
                     "[concat('microsoft.insights/components/', parameters('appName'))]",
-                    "[concat('microsoft.insights/webtests/', 'eShopeWebTest')]"
+                    "[concat('microsoft.insights/webtests/', 'eShopPingTest')]"
                 ],
                 "properties": {
                     "name": "eShopPingTest",
@@ -130,7 +130,7 @@
                         "dataSource": {
                             "$type": "Microsoft.WindowsAzure.Management.Monitoring.Alerts.Models.RuleMetricDataSource, Microsoft.WindowsAzure.Management.Mon.Client",
                             "odata.type": "Microsoft.Azure.Management.Insights.Models.RuleMetricDataSource",
-                            "resourceUri": "[resourceId('microsoft.insights/webtests/', 'eShopeWebTest')]",
+                            "resourceUri": "[resourceId('microsoft.insights/webtests/', 'eShopPingTest')]",
                             "metricName": "GSMT_AvRaW"
                         },
                         "windowSize": "PT15M",
