@@ -288,6 +288,27 @@
             }
         },
         {
+            "type": "Microsoft.Resources/deployments",
+            "apiVersion": "2018-05-01",
+            "name": "AppInsightsDeployment",
+            "dependsOn": [],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[uri(parameters('_artifactsLocation'), 'AppInsightsDeploy.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "appLocation": {
+                        "value": "[resourceGroup().location]"
+                    },
+                    "appName": {
+                        "value": "[concat(parameters('envPrefixName'), 'hackAppInsights')]"
+                    }
+                }
+            }
+        },
+        {
             "apiVersion": "2015-06-15",
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[variables('feNSGName')]",
@@ -1532,6 +1553,14 @@
         "LogAnalyticsWorkspacefullReferenceOutput": {
             "type": "object",
             "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20', 'Full')]"
-          }
+        },
+        "ScaleSetPIPfullReferenceOutput": {
+            "type": "object",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('webSrvPublicIP')), '2015-06-15', 'Full')]"
+        },
+        "ScaleSetPIPDNSname": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('webSrvPublicIP')), '2015-06-15').dnsSettings.fqdn]"
+        }
     }
 }

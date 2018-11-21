@@ -1,0 +1,63 @@
+{
+        "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+        "contentVersion": "1.0.0.0",
+        "parameters": {
+            "appName": {
+                "type": "string",
+                "metadata": {
+                    "description": "Enter the application name."
+                }
+            },
+            "appLocation": {
+                "type": "string",
+                "defaultValue": "East US",
+                "metadata": {
+                    "description": "Enter the application location."
+                }
+            }
+        },
+        "variables": {
+            "appType": "web",
+            "priceCode": 1,
+            "dailyQuota": 100,
+            "dailyQuotaResetTime": 24,
+            "warningThreshold": 90,
+            "priceArray": [
+                "Basic",
+                "Application Insights Enterprise"
+            ],
+            "pricePlan": "[take(variables('priceArray'),variables('priceCode'))]",
+            "billingplan": "[concat(parameters('appName'),'/', variables('pricePlan')[0])]"
+        },
+        "resources": [
+            {
+                "type": "microsoft.insights/components",
+                "kind": "[variables('appType')]",
+                "name": "[parameters('appName')]",
+                "apiVersion": "2014-04-01",
+                "location": "[parameters('appLocation')]",
+                "tags": {},
+                "properties": {
+                    "ApplicationId": "[parameters('appName')]"
+                },
+                "dependsOn": []
+            },
+            {
+                "name": "[variables('billingplan')]",
+                "type": "microsoft.insights/components/CurrentBillingFeatures",
+                "location": "[parameters('appLocation')]",
+                "apiVersion": "2015-05-01",
+                "dependsOn": [
+                    "[resourceId('microsoft.insights/components', parameters('appName'))]"
+                ],
+                "properties": {
+                    "CurrentBillingFeatures": "[variables('pricePlan')]",
+                    "DataVolumeCap": {
+                        "Cap": "[variables('dailyQuota')]",
+                        "WarningThreshold": "[variables('warningThreshold')]",
+                        "ResetTime": "[variables('dailyQuotaResetTime')]"
+                    }
+                }
+            }
+        ]
+    }
