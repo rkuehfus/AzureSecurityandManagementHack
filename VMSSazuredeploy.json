@@ -375,7 +375,8 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', variables('feNSGName'))]",
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]"
+                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
             ],
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'),'hacklogworkspace'))]",
@@ -462,6 +463,7 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', variables('dbNSGName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]"
             ],
             "properties": {
@@ -493,7 +495,8 @@
             "name": "[concat(variables('SecurityKeyVaultName'),'/', 'Microsoft.Insights/setForSecurity')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]"
+                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
             ],
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'),'hacklogworkspace'))]",
@@ -744,6 +747,7 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('envPrefixName'), 'sqlSrv16')]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "[resourceId('Microsoft.Compute/virtualMachines/extensions',concat(parameters('envPrefixName'),'sqlSrv16'),'laPolicy')]"
             ],
             "properties": {
@@ -969,6 +973,7 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('webSrvPublicIP'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]"
             ],
             "properties": {
@@ -1073,6 +1078,7 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/loadBalancers', variables('webLbName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]"
             ],
             "properties": {
@@ -1110,10 +1116,10 @@
             "dependsOn": [
                 "[concat('Microsoft.Network/loadBalancers/', variables('webLbName'))]",
                 "[concat('Microsoft.Compute/virtualMachines/', variables('VisualStudioSrvName'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "[concat(parameters('envPrefixName'), 'VSSrv17CustomScriptExtension')]",
                 "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]",
-                "[resourceId('Microsoft.Resources/deployments','AppInsightsDeployment')]",
-                "[concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]"
+                "[resourceId('Microsoft.Resources/deployments','AppInsightsDeployment')]"
             ],
             "sku": {
                 "name": "[parameters('webSrvVMSize')]",
