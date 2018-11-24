@@ -1565,17 +1565,9 @@
             "type": "string",
             "value": "[reference(variables('vmssFirstServerIP'),'2017-03-30').ipConfigurations[0].properties.privateIPAddress]"
         },
-        "LogAnalyticsWorkspacefullReferenceOutput": {
-            "type": "object",
-            "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20', 'Full')]"
-        },
         "ScaleSetPIPDNSname": {
             "type": "string",
             "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('webSrvPublicIP')), '2015-06-15').dnsSettings.fqdn]"
-        },
-        "AppInsightsfullReferenceOutput": {
-            "type": "object",
-            "value": "[reference(resourceId('microsoft.insights/components', concat(parameters('envPrefixName'), 'hackAppInsights')), '2014-04-01', 'Full')]"
         }
     }
 }
