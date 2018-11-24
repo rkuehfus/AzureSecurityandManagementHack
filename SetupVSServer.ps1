@@ -3,7 +3,7 @@ param (
     [string]$SQLpassword
 )
 
-# Install Microsoft .Net Core 2.1.0
+# Install Microsoft .Net Core 2.1.3
 $exeDotNetTemp = [System.IO.Path]::GetTempPath().ToString() + "dotnet-sdk-2.1.300-win-x64.exe"
 if (Test-Path $exeDotNetTemp) { Remove-Item $exeDotNetTemp -Force }
 # Download file from Microsoft Downloads and save to local temp file (%LocalAppData%/Temp/2)

@@ -3,7 +3,7 @@
   "contentVersion": "1.0.0.0",
   "parameters": {
     "envPrefixName": {
-      "value": "mon15"
+      "value": "mon16"
     },
     "username": {
       "value": "vmadmin"
@@ -11,7 +11,7 @@
     "password": {
       "reference": {
         "keyVault": {
-          "id": "/subscriptions/8b2ef784-0c0d-424c-8a7a-aa1304a0366a/resourceGroups/mon15/providers/Microsoft.KeyVault/vaults/mon15MonitoringHackVault"
+          "id": "/subscriptions/8b2ef784-0c0d-424c-8a7a-aa1304a0366a/resourceGroups/mon16/providers/Microsoft.KeyVault/vaults/mon16MonitoringHackVault"
         },
         "secretName": "VMPassword"
       }

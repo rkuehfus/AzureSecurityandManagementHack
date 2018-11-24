@@ -229,7 +229,7 @@
         "VisualStudioPublicIPRef": "[resourceId('Microsoft.Network/publicIPAddresses', variables('VisualStudioPublicIP'))]",
         "VisualStudioImagePublisher": "MicrosoftVisualStudio",
         "VisualStudioImageOffer": "VisualStudio",
-        "VisualStudioImageSku": "VS-2017-Comm-Latest-WS2016",
+        "VisualStudioImageSku": "VS-2017-Comm-Latest-Win10-N",
         "vmssName": "[concat(parameters('envPrefixName'), 'webScaleSet')]",
         "vmssId": "[resourceId('Microsoft.Compute/virtualMachineScaleSets', variables('vmssName'))]",
         "vmssFirstServerIP": "[concat('Microsoft.Compute/virtualMachineScaleSets/', variables('vmssName'), '/virtualMachines/0/networkInterfaces/', variables('vmssName') ,'Nic')]",
@@ -375,11 +375,11 @@
             "location": "[resourceGroup().location]",
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', variables('feNSGName'))]",
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]",
-                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
+                "LogAnalyticsDeployment"
             ],
             "properties": {
-                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'),'hacklogworkspace'))]",
+                "workspaceId": "[reference('LogAnalyticsDeployment').outputs.LAresourceID.value]",
                 "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "logs": [
                     {
@@ -464,10 +464,10 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/networkSecurityGroups', variables('dbNSGName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]"
+                "LogAnalyticsDeployment"
             ],
             "properties": {
-                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'),'hacklogworkspace'))]",
+                "workspaceId": "[reference('LogAnalyticsDeployment').outputs.LAresourceID.value]",
                 "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "logs": [
                     {
@@ -495,11 +495,11 @@
             "name": "[concat(variables('SecurityKeyVaultName'),'/', 'Microsoft.Insights/setForSecurity')]",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]",
+                "LogAnalyticsDeployment",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]"
             ],
             "properties": {
-                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'),'hacklogworkspace'))]",
+                "workspaceId": "[reference('LogAnalyticsDeployment').outputs.LAresourceID.value]",
                 "storageAccountId": "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "metrics": [
                     {
@@ -803,7 +803,7 @@
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]",
+                "LogAnalyticsDeployment",
                 "[concat('Microsoft.Compute/virtualMachines/', parameters('envPrefixName'), 'sqlSrv16')]"
             ],
             "apiVersion": "2017-12-01",
@@ -942,7 +942,7 @@
                         "autoUpgradeMinorVersion": true,
                         "settings": {
                             "fileUris": [
-                                "https://raw.githubusercontent.com/rkuehfus/AzureMonitoringHackathon/master/Student/Resources/SetupVSServer.ps1"
+                                "https://raw.githubusercontent.com/rkuehfus/AzureSecurityandManagementHack/master/SetupVSServer.ps1"
                             ],
                             "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File SetupVSServer.ps1 ', ' ', variables('sqlSrvDBName'), ' ', parameters('password'))]"
                         }
@@ -974,7 +974,7 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/publicIPAddresses', variables('webSrvPublicIP'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]"
+                "LogAnalyticsDeployment"
             ],
             "properties": {
                 "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'),'hacklogworkspace'))]",
@@ -1079,10 +1079,10 @@
             "dependsOn": [
                 "[resourceId('Microsoft.Network/loadBalancers', variables('webLbName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]"
+                "LogAnalyticsDeployment"
             ],
             "properties": {
-                "workspaceId": "[resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'),'hacklogworkspace'))]",
+                "workspaceId": "[reference('LogAnalyticsDeployment').outputs.LAresourceID.value]",
                 "metrics": [
                     {
                         "category": "AllMetrics",
@@ -1118,8 +1118,8 @@
                 "[concat('Microsoft.Compute/virtualMachines/', variables('VisualStudioSrvName'))]",
                 "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccountName'))]",
                 "[concat(parameters('envPrefixName'), 'VSSrv17CustomScriptExtension')]",
-                "[resourceId('Microsoft.Resources/deployments','LogAnalyticsDeployment')]",
-                "[resourceId('Microsoft.Resources/deployments','AppInsightsDeployment')]"
+                "LogAnalyticsDeployment",
+                "AppInsightsDeployment"
             ],
             "sku": {
                 "name": "[parameters('webSrvVMSize')]",
@@ -1192,7 +1192,7 @@
                                     "autoUpgradeMinorVersion": true,
                                     "settings": {
                                         "fileUris": [
-                                            "https://raw.githubusercontent.com/rkuehfus/AzureMonitoringHackathon/master/Student/Resources/SetupWebServers.ps1"
+                                            "https://raw.githubusercontent.com/rkuehfus/AzureSecurityandManagementHack/master/SetupWebServers.ps1"
                                         ],
                                         "commandToExecute": "[concat('powershell.exe -ExecutionPolicy Unrestricted -File SetupWebServers.ps1 ',variables('VisualStudioSrvName'), ' ', parameters('username'), ' ', parameters('password'))]"
                                     }
