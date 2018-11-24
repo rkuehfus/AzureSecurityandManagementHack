@@ -813,10 +813,10 @@
                 "typeHandlerVersion": "1.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "workspaceId": "[reference(reference('LogAnalyticsDeployment').outputs.LAresourceID.value, '2015-03-20').customerId]"
+                    "workspaceId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20').customerId]"
                 },
                 "protectedSettings": {
-                    "workspaceKey": "[listKeys(reference('LogAnalyticsDeployment').outputs.LAresourceID.value, '2015-03-20').primarySharedKey]"
+                    "workspaceKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20').primarySharedKey]"
                 }
             }
         },
@@ -1205,10 +1205,10 @@
                                     "typeHandlerVersion": "1.0",
                                     "autoUpgradeMinorVersion": true,
                                     "settings": {
-                                        "workspaceId": "[reference(reference('LogAnalyticsDeployment').outputs.LAresourceID.value, '2015-03-20').customerId]"
+                                        "workspaceId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20').customerId]"
                                     },
                                     "protectedSettings": {
-                                        "workspaceKey": "[listKeys(reference('LogAnalyticsDeployment').outputs.LAresourceID.value, '2015-03-20').primarySharedKey]"
+                                        "workspaceKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20').primarySharedKey]"
                                     }
                                 }
                             },
