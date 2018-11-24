@@ -813,10 +813,10 @@
                 "typeHandlerVersion": "1.0",
                 "autoUpgradeMinorVersion": true,
                 "settings": {
-                    "workspaceId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20').customerId]"
+                    "workspaceId": "[reference('LogAnalyticsDeployment').outputs.LAworkSpaceID.value]"
                 },
                 "protectedSettings": {
-                    "workspaceKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20').primarySharedKey]"
+                    "workspaceKey": "[reference('LogAnalyticsDeployment').outputs.LAworkSpaceKey.value]"
                 }
             }
         },
@@ -1205,10 +1205,10 @@
                                     "typeHandlerVersion": "1.0",
                                     "autoUpgradeMinorVersion": true,
                                     "settings": {
-                                        "workspaceId": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20').customerId]"
+                                        "workspaceId": "[reference('LogAnalyticsDeployment').outputs.LAworkSpaceID.value]"
                                     },
                                     "protectedSettings": {
-                                        "workspaceKey": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', concat(parameters('envPrefixName'), 'hacklogworkspace')), '2015-03-20').primarySharedKey]"
+                                        "workspaceKey": "[reference('LogAnalyticsDeployment').outputs.LAworkSpaceKey.value]"
                                     }
                                 }
                             },

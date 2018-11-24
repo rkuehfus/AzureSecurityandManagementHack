@@ -497,6 +497,14 @@
         "LAresourceID": {
             "type": "string",
             "value": "[resourceId('Microsoft.OperationalInsights/workspaces', parameters('WorkspaceName'))]"
+        },
+        "LAworkSpaceID": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.OperationalInsights/workspaces', parameters('WorkspaceName')), '2015-03-20').customerId]"
+        },
+        "LAworkSpaceKey": {
+            "type": "string",
+            "value": "[listKeys(resourceId('Microsoft.OperationalInsights/workspaces', parameters('WorkspaceName')), '2015-03-20').primarySharedKey]"
         }
     }
 }
